@@ -15,9 +15,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "address", schema = "breaded")
+@Table(name = "address")
 @Data
-
 @EqualsAndHashCode(exclude = "user")
 public class Address {
 	

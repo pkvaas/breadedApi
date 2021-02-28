@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 
 
 @Entity
-@Table(name = "user", schema = "breaded")
+@Table(name = "users")
 @Data
 @EqualsAndHashCode(exclude = "addresses")
 public class User {

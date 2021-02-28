@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "breads", schema = "breaded")
+@Table(name = "breads")
 @Data
 public class Breads {
 
@@ -40,7 +40,7 @@ public class Breads {
 	private Boolean gluten;
 	
 	@OneToMany
-	@JoinTable(schema = "breaded", name ="breads_breadfilter" ,joinColumns = {@JoinColumn(name="bread_id", referencedColumnName = "bread_id")}, 
+	@JoinTable(name ="breads_breadfilter" ,joinColumns = {@JoinColumn(name="bread_id", referencedColumnName = "bread_id")}, 
 	inverseJoinColumns = {@JoinColumn(name="filter_id", referencedColumnName = "filter_id")} )
 	private Set<BreadFilter> breadFilters;
 	

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "myboxes", schema = "breaded")
+@Table(name = "myboxes")
 @Data
 public class Myboxes {
 	
@@ -32,7 +32,7 @@ public class Myboxes {
 	private String timeofdelivery;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "status_id", referencedColumnName = "id")
+	@JoinColumn(name = "status_id", referencedColumnName = "status_id")
 	private Status status;
 
 }

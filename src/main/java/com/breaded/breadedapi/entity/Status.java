@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "status", schema = "breaded")
+@Table(name = "status")
 @Data
 public class Status {
 	

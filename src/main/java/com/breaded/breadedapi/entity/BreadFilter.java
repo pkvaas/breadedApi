@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "breadfilter", schema = "breaded")
+@Table(name = "breadfilter")
 @Data
 public class BreadFilter {
 	
