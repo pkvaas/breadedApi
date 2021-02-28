@@ -2,14 +2,16 @@ package com.breaded.breadedapi.entity;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -39,7 +41,7 @@ public class Breads {
 	@Column(name = "gluten")
 	private Boolean gluten;
 	
-	@OneToMany
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinTable(name ="breads_breadfilter" ,joinColumns = {@JoinColumn(name="bread_id", referencedColumnName = "bread_id")}, 
 	inverseJoinColumns = {@JoinColumn(name="filter_id", referencedColumnName = "filter_id")} )
 	private Set<BreadFilter> breadFilters;
