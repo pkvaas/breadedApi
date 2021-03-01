@@ -14,11 +14,15 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "breads")
 @Data
+@EqualsAndHashCode(exclude = "breadFilters")
 public class Breads {
 
 	@Id
@@ -41,9 +45,16 @@ public class Breads {
 	@Column(name = "gluten")
 	private Boolean gluten;
 	
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinTable(name ="breads_breadfilter" ,joinColumns = {@JoinColumn(name="bread_id", referencedColumnName = "bread_id")}, 
-	inverseJoinColumns = {@JoinColumn(name="filter_id", referencedColumnName = "filter_id")} )
+//	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+//	@JoinTable(name ="breads_breadfilter" ,joinColumns = {@JoinColumn(name="bread_id", referencedColumnName = "bread_id")}, 
+//	inverseJoinColumns = {@JoinColumn(name="filter_id", referencedColumnName = "filter_id")} )
+//	
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "breads_breadfilter", 
+    joinColumns = { @JoinColumn(name = "bread_id", nullable = false) }, 
+    inverseJoinColumns = { @JoinColumn(name = "filter_id", 
+            nullable = false) })
+	@JsonIgnoreProperties("breadlist")
 	private Set<BreadFilter> breadFilters;
 	
 	

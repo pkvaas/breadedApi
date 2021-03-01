@@ -51,13 +51,14 @@ public class BreadedApiController {
 		
 		 if (!loginUser.isPresent()) {
 		        return new ResponseEntity<>(
-		        		loginUser.get(), 
-		          HttpStatus.BAD_REQUEST);
-		    }
+		        		null, 
+		          HttpStatus.NOT_FOUND);
+		    }else {
 
 		    return new ResponseEntity<>(
 		    		loginUser.get(), 
 		      HttpStatus.OK);
+		    }
 	}
 	
 	@PostMapping("user")
