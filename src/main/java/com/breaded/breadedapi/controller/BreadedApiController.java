@@ -29,7 +29,7 @@ import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
 
 @CrossOrigin
-@RestController(value = "/")
+@RestController(value = "api/v1/")
 public class BreadedApiController {
 	
 	@Autowired
@@ -52,10 +52,9 @@ public class BreadedApiController {
     public static final String SERVICE_ID = "VA2421c7e862cab358f1801f4819f53851";
 	
 	@GetMapping("user")
-	ResponseEntity<User> getUserByLoginCredentials(@RequestParam("email") String email, 
-			@RequestParam("password") String password){
+	ResponseEntity<User> getUserByLoginCredentials(@RequestBody User user){
 		
-		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
+		Optional<User> loginUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
 		
 		 if (loginUser.isPresent()) {
 			 return new ResponseEntity<>(
@@ -129,7 +128,7 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@PostMapping("sms")
+	@PostMapping("sms/sendotp")
 	ResponseEntity<String> sendOTP(@RequestBody String phonenumber){
 		
 		 try {
@@ -157,7 +156,7 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@PostMapping("sms")
+	@PostMapping("sms/verifyotp")
 	ResponseEntity<String> verifyOTP(@RequestParam("phonenumber") String phonenumber, 
 			@RequestParam("otp") String otp){
 		
