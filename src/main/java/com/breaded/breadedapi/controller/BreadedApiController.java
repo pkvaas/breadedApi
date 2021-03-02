@@ -23,6 +23,10 @@ import com.breaded.breadedapi.service.BreadFilterService;
 import com.breaded.breadedapi.service.BreadsService;
 import com.breaded.breadedapi.service.SubscriptionService;
 import com.breaded.breadedapi.service.UserService;
+import com.twilio.Twilio;
+import com.twilio.rest.lookups.v1.PhoneNumber;
+import com.twilio.rest.verify.v2.service.Verification;
+import com.twilio.rest.verify.v2.service.VerificationCheck;
 
 @CrossOrigin
 @RestController(value = "api/v1/")
@@ -42,23 +46,27 @@ public class BreadedApiController {
 	
 	@Autowired
 	SubscriptionService subscriptionService;
+
+	public static final String ACCOUNT_SID = "AC25d770e26932b80420946ff5322ad6df";//System.getenv("TWILIO_ACCOUNT_SID");
+    public static final String AUTH_TOKEN = "7fea92847fe26ca79805938be81a2873";//System.getenv("TWILIO_AUTH_TOKEN");
+    public static final String SERVICE_ID = "VA2421c7e862cab358f1801f4819f53851";
 	
 	@GetMapping("user")
 	ResponseEntity<User> getUserByLoginCredentials(@RequestParam("email") String email, 
-			@RequestParam("password") String password ){
+			@RequestParam("password") String password){
 		
 		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
 		
-		 if (!loginUser.isPresent()) {
-		        return new ResponseEntity<>(
-		        		null, 
-		          HttpStatus.NOT_FOUND);
-		    }else {
-
-		    return new ResponseEntity<>(
+		 if (loginUser.isPresent()) {
+			 return new ResponseEntity<>(
 		    		loginUser.get(), 
 		      HttpStatus.OK);
-		    }
+		        
+		}else {
+	    	return new ResponseEntity<>(
+	        		null, 
+	        HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PostMapping("user")
@@ -120,4 +128,63 @@ public class BreadedApiController {
 				 subscriptionService.save(subscription), 
 		      HttpStatus.OK);
 	}
+	
+	@PostMapping("sms")
+	ResponseEntity<String> sendOTP(@RequestBody String phonenumber){
+		
+		 try {
+			 
+			 Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+				PhoneNumber number = PhoneNumber.fetcher(new com.twilio.type.PhoneNumber(phonenumber))
+						.setType("carrier").fetch();
+				/*
+				 * if(!number.getCountryCode().equals("GB")) { return new ResponseEntity<>(
+				 * "Phone number not found.", HttpStatus.NOT_FOUND); }
+				 */
+		        
+		    } catch(com.twilio.exception.ApiException e) {
+		    	return new ResponseEntity<>(
+						 "Phone number not found.", 
+				      HttpStatus.NOT_FOUND);
+		    }
+		
+		 Verification verification = Verification.creator(SERVICE_ID,
+				 phonenumber,"sms").create();
+        
+        
+		return new ResponseEntity<>(
+				 "OTP Successfully sent", 
+		      HttpStatus.OK);
+	}
+	
+	@PostMapping("sms")
+	ResponseEntity<String> verifyOTP(@RequestParam("phonenumber") String phonenumber, 
+			@RequestParam("otp") String otp){
+		
+		 try {
+			 	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+		        VerificationCheck verificationCheck = VerificationCheck.creator(
+		        		SERVICE_ID,
+		        		phonenumber)
+		            .setTo(otp).create();
+		        
+		        if(!verificationCheck.getStatus().equals("approved")) {
+		        	return new ResponseEntity<>(
+							 "please enter valid OTP.", 
+					      HttpStatus.NOT_FOUND);
+		        }
+		        
+		    } catch(com.twilio.exception.ApiException e) {
+		    	return new ResponseEntity<>(
+						 "please enter valid OTP.", 
+				      HttpStatus.NOT_FOUND);
+		    }
+        
+		return new ResponseEntity<>(
+				 "OTP Successfully sent", 
+		      HttpStatus.OK);
+	}
+	
+	
+    
 }
