@@ -29,7 +29,6 @@ import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
 
 @CrossOrigin
-@RestController(value = "api/v1/")
 public class BreadedApiController {
 	
 	@Autowired
