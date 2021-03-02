@@ -52,9 +52,9 @@ public class BreadedApiController {
     public static final String SERVICE_ID = "VA2421c7e862cab358f1801f4819f53851";
 	
 	@GetMapping("user")
-	ResponseEntity<User> getUserByLoginCredentials(@RequestBody User user){
+	ResponseEntity<User> getUserByLoginCredentials(@RequestParam("email") String email, @RequestParam("password") String password){
 		
-		Optional<User> loginUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
 		
 		 if (loginUser.isPresent()) {
 			 return new ResponseEntity<>(
@@ -129,7 +129,7 @@ public class BreadedApiController {
 	}
 	
 	@PostMapping("sms/sendotp")
-	ResponseEntity<String> sendOTP(@RequestBody String phonenumber){
+	ResponseEntity<String> sendOTP(@RequestParam("phonenumber") String phonenumber){
 		
 		 try {
 			 
