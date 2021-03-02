@@ -47,8 +47,8 @@ public class BreadedApiController {
 	@Autowired
 	SubscriptionService subscriptionService;
 
-	public static final String ACCOUNT_SID = "AC25d770e26932b80420946ff5322ad6df";//System.getenv("TWILIO_ACCOUNT_SID");
-    public static final String AUTH_TOKEN = "7fea92847fe26ca79805938be81a2873";//System.getenv("TWILIO_AUTH_TOKEN");
+	public static final String ACCOUNT_SID = "SK8fd3602d420dff9592468f1c7633fd80";//System.getenv("TWILIO_ACCOUNT_SID");
+    public static final String AUTH_TOKEN = "niBdmGoNDtvBgGqaXJHGpKBxhBfA8yxQ";//System.getenv("TWILIO_AUTH_TOKEN");
     public static final String SERVICE_ID = "VA2421c7e862cab358f1801f4819f53851";
 	
 	@GetMapping("user")
