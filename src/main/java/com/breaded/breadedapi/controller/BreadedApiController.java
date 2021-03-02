@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,10 +52,10 @@ public class BreadedApiController {
     public static final String AUTH_TOKEN = "niBdmGoNDtvBgGqaXJHGpKBxhBfA8yxQ";//System.getenv("TWILIO_AUTH_TOKEN");
     public static final String SERVICE_ID = "VA2421c7e862cab358f1801f4819f53851";
 	
-	@GetMapping("user")
-	ResponseEntity<User> getUserByLoginCredentials(@RequestParam("email") String email, @RequestParam("password") String password){
+	@PostMapping("user/login")
+	ResponseEntity<User> login(@RequestBody User user){
 		
-		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
+		Optional<User> loginUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
 		
 		 if (loginUser.isPresent()) {
 			 return new ResponseEntity<>(
@@ -68,7 +69,7 @@ public class BreadedApiController {
 		}
 	}
 	
-	@PostMapping("user")
+	@PostMapping("user/signup")
 	ResponseEntity<User> signUp(@RequestBody User user){
 		 return new ResponseEntity<>(
 				 userService.Save(user), 
