@@ -88,8 +88,8 @@ public class BreadedApiController {
     	
     	List<User> userList = userService.findAll();
 		 
-		 Optional<User> login = userList.stream().filter(item ->
-		 item.getEmail().equals(user.getEmail()) && item.getPassword().equals(user.getPassword())).findAny();
+		 Optional<User> login = user != null ? userList.stream().filter(item ->
+		 item.getEmail().equals(user.getEmail()) && item.getPassword().equals(user.getPassword())).findAny() : null;
 		 
 		 if(login.isPresent()) {
 				 return new ResponseEntity<>(		 
