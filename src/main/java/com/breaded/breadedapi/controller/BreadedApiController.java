@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.breaded.breadedapi.entity.Address;
 import com.breaded.breadedapi.entity.BreadFilter;
 import com.breaded.breadedapi.entity.Breads;
+import com.breaded.breadedapi.entity.Myboxes;
 import com.breaded.breadedapi.entity.OTP;
 import com.breaded.breadedapi.entity.Subscription;
 import com.breaded.breadedapi.entity.User;
 import com.breaded.breadedapi.service.AddressService;
 import com.breaded.breadedapi.service.BreadFilterService;
 import com.breaded.breadedapi.service.BreadsService;
+import com.breaded.breadedapi.service.MyBoxesService;
 import com.breaded.breadedapi.service.SubscriptionService;
 import com.breaded.breadedapi.service.UserService;
 import com.twilio.Twilio;
@@ -46,6 +48,10 @@ public class BreadedApiController {
 	
 	@Autowired
 	SubscriptionService subscriptionService;
+	
+	@Autowired
+	MyBoxesService myBoxesService;
+
 
 	public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
@@ -127,6 +133,23 @@ public class BreadedApiController {
 				 subscriptionService.save(subscription), 
 		      HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("myboxes")
+	ResponseEntity<Myboxes> addMyBox(@RequestBody Myboxes myBoxes){
+		 return new ResponseEntity<>(
+				 myBoxesService.save(myBoxes), 
+		      HttpStatus.OK);
+	}
+	
+	@PostMapping("myboxes")
+	ResponseEntity<List<Myboxes>> getMyboxesByUser(@RequestBody User user){
+		
+		    return new ResponseEntity<>(
+		    		myBoxesService.findByUser(user), 
+		      HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("sms/sendotp")
 	ResponseEntity<String> sendOTP(@RequestBody String phonenumber){

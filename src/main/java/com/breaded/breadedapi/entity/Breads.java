@@ -57,5 +57,4 @@ public class Breads {
 	@JsonIgnoreProperties("breadlist")
 	private Set<BreadFilter> breadFilters;
 	
-	
 }
