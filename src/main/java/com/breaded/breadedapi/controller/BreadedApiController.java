@@ -142,7 +142,7 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@PostMapping("myboxes")
+	@PostMapping("myboxes/findbyuser")
 	ResponseEntity<List<Myboxes>> getMyboxesByUser(@RequestBody User user){
 		
 		    return new ResponseEntity<>(
