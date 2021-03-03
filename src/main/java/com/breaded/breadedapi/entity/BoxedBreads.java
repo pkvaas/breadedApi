@@ -28,7 +28,7 @@ public class BoxedBreads {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bread_id", referencedColumnName = "bread_id")
-	private Breads breads;
+	private Breads bread;
 	
 	@Column(name="count")
 	private int count;
