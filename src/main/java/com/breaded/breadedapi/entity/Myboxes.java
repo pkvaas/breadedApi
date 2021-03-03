@@ -37,11 +37,11 @@ public class Myboxes {
 	@Column(name = "timeofdelivery")
 	private String timeofdelivery;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "status_id", referencedColumnName = "status_id")
 	private Status status;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 	
