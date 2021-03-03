@@ -11,4 +11,6 @@ import com.breaded.breadedapi.entity.User;
 public interface UserRepository extends CrudRepository<User, Long> {
 
 	Optional<User> findByEmailAndPassword(String email, String password);
+	
+	Optional<User> findById(Long id);
 }

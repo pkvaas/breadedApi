@@ -6,6 +6,8 @@ import com.breaded.breadedapi.entity.User;
 
 public interface UserService {
 
+	Optional<User> findById(Long id);
+	
 	Optional<User> findByEmailAndPassword(String email, String password);
 	
 	User Save(User user);

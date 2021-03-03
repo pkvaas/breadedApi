@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -73,6 +74,31 @@ public class BreadedApiController {
 	        HttpStatus.NOT_FOUND);
 		}
 	}
+    
+    @PostMapping("user/findbyuser")
+	ResponseEntity<User> findbyuser(@RequestBody User user){
+		
+		Optional<User> loginUser = userService.findById(user.getId());
+		
+		 if (loginUser.isPresent()) {
+			 return new ResponseEntity<>(
+		    		loginUser.get(), 
+		      HttpStatus.OK);
+		        
+		}else {
+	    	return new ResponseEntity<>(
+	        		null, 
+	        HttpStatus.NOT_FOUND);
+		}
+	}
+	
+    @PutMapping("user")
+	ResponseEntity<User> updateSubscription(@RequestBody User user){
+		 return new ResponseEntity<>(
+				 userService.Save(user), 
+		      HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("user/signup")
 	ResponseEntity<User> signUp(@RequestBody User user){
@@ -133,7 +159,6 @@ public class BreadedApiController {
 				 subscriptionService.save(subscription), 
 		      HttpStatus.OK);
 	}
-	
 	
 	@PostMapping("myboxes")
 	ResponseEntity<Myboxes> addMyBox(@RequestBody Myboxes myBoxes){

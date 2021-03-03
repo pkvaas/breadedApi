@@ -10,7 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,6 +58,10 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_login")
 	private Date lastlogin;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subscription_id", nullable = true)
+	private Subscription Subscription;
 	
 	//@JsonIgnore
 	@OneToMany(
