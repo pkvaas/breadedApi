@@ -9,14 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.breaded.breadedapi.entity.Address;
 import com.breaded.breadedapi.entity.BreadFilter;
 import com.breaded.breadedapi.entity.Breads;
+import com.breaded.breadedapi.entity.OTP;
 import com.breaded.breadedapi.entity.Subscription;
 import com.breaded.breadedapi.entity.User;
 import com.breaded.breadedapi.service.AddressService;
@@ -48,11 +47,11 @@ public class BreadedApiController {
 	@Autowired
 	SubscriptionService subscriptionService;
 
-	public static final String ACCOUNT_SID = "SK8fd3602d420dff9592468f1c7633fd80";//System.getenv("TWILIO_ACCOUNT_SID");
-    public static final String AUTH_TOKEN = "niBdmGoNDtvBgGqaXJHGpKBxhBfA8yxQ";//System.getenv("TWILIO_AUTH_TOKEN");
-    public static final String SERVICE_ID = "VA2421c7e862cab358f1801f4819f53851";
+	public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
+    public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
+    public static final String SERVICE_ID = System.getenv("TWILIO_SERVICE_ID");
 	
-	@PostMapping("user/login")
+	@GetMapping("user/login")
 	ResponseEntity<User> login(@RequestBody User user){
 		
 		Optional<User> loginUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
@@ -129,8 +128,8 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@PostMapping("sms/sendotp")
-	ResponseEntity<String> sendOTP(@RequestParam("phonenumber") String phonenumber){
+	@GetMapping("sms/sendotp")
+	ResponseEntity<String> sendOTP(@RequestBody String phonenumber){
 		
 		 try {
 			 
@@ -157,16 +156,15 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@PostMapping("sms/verifyotp")
-	ResponseEntity<String> verifyOTP(@RequestParam("phonenumber") String phonenumber, 
-			@RequestParam("otp") String otp){
+	@GetMapping("sms/verifyotp")
+	ResponseEntity<String> verifyOTP(@RequestBody OTP otp){
 		
 		 try {
 			 	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 		        VerificationCheck verificationCheck = VerificationCheck.creator(
 		        		SERVICE_ID,
-		        		phonenumber)
-		            .setTo(otp).create();
+		        		otp.phonenumber)
+		            .setTo(otp.getOtp()).create();
 		        
 		        if(!verificationCheck.getStatus().equals("approved")) {
 		        	return new ResponseEntity<>(
