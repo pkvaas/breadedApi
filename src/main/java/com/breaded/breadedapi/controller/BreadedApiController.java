@@ -158,6 +158,13 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
+	@PutMapping("bread")
+	ResponseEntity<Breads> editBread(@RequestBody Breads bread){
+		 return new ResponseEntity<>(
+				 breadsService.save(bread), 
+		      HttpStatus.OK);
+	}
+	
 	@GetMapping("breadfilter")
 	ResponseEntity<List<BreadFilter>> getBreadFilter(){
 		
