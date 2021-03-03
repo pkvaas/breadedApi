@@ -14,11 +14,13 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @Entity
 @Table(name = "boxedbreads")
 @Data
+@EqualsAndHashCode(exclude = "myboxes")
 public class BoxedBreads {
 
 	@Id

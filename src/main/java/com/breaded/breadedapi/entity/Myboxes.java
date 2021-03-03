@@ -17,10 +17,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "myboxes")
 @Data
+@EqualsAndHashCode(exclude = "boxedBreadList")
 public class Myboxes {
 	
 	@Id
