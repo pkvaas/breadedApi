@@ -18,12 +18,14 @@ import com.breaded.breadedapi.entity.BreadFilter;
 import com.breaded.breadedapi.entity.Breads;
 import com.breaded.breadedapi.entity.Myboxes;
 import com.breaded.breadedapi.entity.OTP;
+import com.breaded.breadedapi.entity.Status;
 import com.breaded.breadedapi.entity.Subscription;
 import com.breaded.breadedapi.entity.User;
 import com.breaded.breadedapi.service.AddressService;
 import com.breaded.breadedapi.service.BreadFilterService;
 import com.breaded.breadedapi.service.BreadsService;
 import com.breaded.breadedapi.service.MyBoxesService;
+import com.breaded.breadedapi.service.StatusService;
 import com.breaded.breadedapi.service.SubscriptionService;
 import com.breaded.breadedapi.service.UserService;
 import com.twilio.Twilio;
@@ -52,6 +54,9 @@ public class BreadedApiController {
 	
 	@Autowired
 	MyBoxesService myBoxesService;
+	
+	@Autowired
+	StatusService statusService;
 
 
 	public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
@@ -172,6 +177,20 @@ public class BreadedApiController {
 		
 		    return new ResponseEntity<>(
 		    		myBoxesService.findByUser(user), 
+		      HttpStatus.OK);
+	}
+	
+	@PostMapping("status")
+	ResponseEntity<Status> addStatus(@RequestBody Status status){
+		 return new ResponseEntity<>(
+				 statusService.save(status), 
+		      HttpStatus.OK);
+	}
+	
+	@PostMapping("status")
+	ResponseEntity<List<Status>> getStatus(){
+		 return new ResponseEntity<>(
+				 statusService.findAll(), 
 		      HttpStatus.OK);
 	}
 	
