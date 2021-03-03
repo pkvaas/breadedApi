@@ -34,7 +34,7 @@ public class BoxedBreads {
 	private int count;
 	
 	@ManyToOne
-	@JoinColumn(name="myboxes_id")
+	@JoinColumn(name="myboxes_id", insertable = false, updatable = false)
 	@JsonIgnoreProperties("boxedBreadList")
 	private Myboxes myboxes;
 	
