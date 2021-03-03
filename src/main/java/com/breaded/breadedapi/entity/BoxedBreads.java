@@ -26,7 +26,7 @@ public class BoxedBreads {
 	@Column(name="boxedbreads_id")
 	private long id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "bread_id", referencedColumnName = "bread_id")
 	private Breads bread;
 	
