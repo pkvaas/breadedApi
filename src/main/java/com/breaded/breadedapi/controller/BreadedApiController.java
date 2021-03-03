@@ -158,10 +158,10 @@ public class BreadedApiController {
 	
 	@PostMapping("sms/verifyotp")
 	ResponseEntity<String> verifyOTP(@RequestBody OTP otp){
-		
+		VerificationCheck verificationCheck;
 		 try {
 			 	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-		        VerificationCheck verificationCheck = VerificationCheck.creator(
+		        verificationCheck = VerificationCheck.creator(
 		        		SERVICE_ID,
 		        		otp.getOtp())
 		            .setTo(otp.getPhonenumber()).create();
@@ -179,7 +179,7 @@ public class BreadedApiController {
 		    }
         
 		return new ResponseEntity<>(
-				 "OTP Successfully sent", 
+				verificationCheck.getStatus(), 
 		      HttpStatus.OK);
 	}
 	
