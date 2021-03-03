@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.breaded.breadedapi.entity.Address;
@@ -66,18 +65,38 @@ public class BreadedApiController {
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
     public static final String SERVICE_ID = System.getenv("TWILIO_SERVICE_ID");
 	
-    @GetMapping("user/login")
-	ResponseEntity<User> login(@RequestParam(value = "email") String email,
-		      @RequestParam(value = "password") String password){
-		
-		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
-		
-		 if (loginUser.isPresent()) {
-			 return new ResponseEntity<>(
-		    		loginUser.get(), 
+//    @GetMapping("user/login/{email}/{password}")
+//	ResponseEntity<User> login(@RequestParam(value = "email") String email,
+//		      @RequestParam(value = "password") String password){
+//		
+//		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
+//		
+//		 if (loginUser.isPresent()) {
+//			 return new ResponseEntity<>(
+//		    		loginUser.get(), 
+//		      HttpStatus.OK);
+//		        
+//		}else {
+//	    	return new ResponseEntity<>(
+//	        		null, 
+//	        HttpStatus.NOT_FOUND);
+//		}
+//	}
+    
+    @PostMapping("user/login")
+	ResponseEntity<User> login(@RequestBody User user){
+    	
+    	List<User> userList = userService.findAll();
+		 
+		 Optional<User> login = userList.stream().filter(item ->
+		 item.getEmail().equals(user.getEmail()) && item.getPassword().equals(user.getPassword())).findAny();
+		 
+		 if(login.isPresent()) {
+				 return new ResponseEntity<>(		 
+					 userService.Save(login.get()), 
+				 
 		      HttpStatus.OK);
-		        
-		}else {
+		 }else {
 	    	return new ResponseEntity<>(
 	        		null, 
 	        HttpStatus.NOT_FOUND);

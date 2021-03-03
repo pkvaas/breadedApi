@@ -1,5 +1,6 @@
 package com.breaded.breadedapi.serviceImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Optional<User> findById(Long id) {
 		return userRepository.findById(id);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return (List<User>) userRepository.findAll();
 	}
 
 }
