@@ -51,7 +51,7 @@ public class BreadedApiController {
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
     public static final String SERVICE_ID = System.getenv("TWILIO_SERVICE_ID");
 	
-	@GetMapping("user/login")
+    @PostMapping("user/login")
 	ResponseEntity<User> login(@RequestBody User user){
 		
 		Optional<User> loginUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
@@ -128,7 +128,7 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@GetMapping("sms/sendotp")
+	@PostMapping("sms/sendotp")
 	ResponseEntity<String> sendOTP(@RequestBody String phonenumber){
 		
 		 try {
@@ -156,7 +156,7 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@GetMapping("sms/verifyotp")
+	@PostMapping("sms/verifyotp")
 	ResponseEntity<String> verifyOTP(@RequestBody OTP otp){
 		
 		 try {
