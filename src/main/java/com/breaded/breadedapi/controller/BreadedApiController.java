@@ -187,7 +187,7 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
-	@PostMapping("status")
+	@GetMapping("status")
 	ResponseEntity<List<Status>> getStatus(){
 		 return new ResponseEntity<>(
 				 statusService.findAll(), 
