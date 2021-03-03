@@ -2,6 +2,7 @@ package com.breaded.breadedapi.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.breaded.breadedapi.entity.Address;
+import com.breaded.breadedapi.entity.BoxedBreads;
 import com.breaded.breadedapi.entity.BreadFilter;
 import com.breaded.breadedapi.entity.Breads;
 import com.breaded.breadedapi.entity.Myboxes;
@@ -63,10 +66,11 @@ public class BreadedApiController {
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
     public static final String SERVICE_ID = System.getenv("TWILIO_SERVICE_ID");
 	
-    @PostMapping("user/login")
-	ResponseEntity<User> login(@RequestBody User user){
+    @GetMapping("user/login")
+	ResponseEntity<User> login(@RequestParam(value = "email") String email,
+		      @RequestParam(value = "password") String password){
 		
-		Optional<User> loginUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		Optional<User> loginUser = userService.findByEmailAndPassword(email, password);
 		
 		 if (loginUser.isPresent()) {
 			 return new ResponseEntity<>(
@@ -167,8 +171,11 @@ public class BreadedApiController {
 	
 	@PostMapping("myboxes")
 	ResponseEntity<Myboxes> addMyBox(@RequestBody Myboxes myBoxes){
+		Set<BoxedBreads> boxedBreads = myBoxes.getBoxedBreadList();
+		boxedBreads.forEach(boxedBread -> boxedBread.setMyboxes(myBoxes));
+		myBoxes.setBoxedBreadList(boxedBreads);
 		 return new ResponseEntity<>(
-				 myBoxesService.save(myBoxes), 
+				 myBoxesService.save(myBoxes),
 		      HttpStatus.OK);
 	}
 	
