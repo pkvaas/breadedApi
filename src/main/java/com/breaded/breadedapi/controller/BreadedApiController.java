@@ -163,8 +163,8 @@ public class BreadedApiController {
 			 	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 		        VerificationCheck verificationCheck = VerificationCheck.creator(
 		        		SERVICE_ID,
-		        		otp.phonenumber)
-		            .setTo(otp.getOtp()).create();
+		        		otp.getOtp())
+		            .setTo(otp.getPhonenumber()).create();
 		        
 		        if(!verificationCheck.getStatus().equals("approved")) {
 		        	return new ResponseEntity<>(
