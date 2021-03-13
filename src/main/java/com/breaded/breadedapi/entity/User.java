@@ -48,6 +48,12 @@ public class User {
 	
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "phonenumber1")
+	private String phonenumber1;
+	
+	@Column(name = "phonenumber2")
+	private String phonenumber2;
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
