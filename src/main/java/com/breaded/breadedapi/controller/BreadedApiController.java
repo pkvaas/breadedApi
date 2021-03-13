@@ -205,6 +205,16 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
+	@PutMapping("myboxes")
+	ResponseEntity<Myboxes> updateMyBox(@RequestBody Myboxes myBoxes){
+		Set<BoxedBreads> boxedBreads = myBoxes.getBoxedBreadList();
+		boxedBreads.forEach(boxedBread -> boxedBread.setMyboxes(myBoxes));
+		myBoxes.setBoxedBreadList(boxedBreads);
+		 return new ResponseEntity<>(
+				 myBoxesService.save(myBoxes),
+		      HttpStatus.OK);
+	}
+	
 	@PostMapping("myboxes/findbyuser")
 	ResponseEntity<List<Myboxes>> getMyboxesByUser(@RequestBody User user){
 		

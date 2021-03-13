@@ -55,5 +55,8 @@ public class Myboxes {
 	    )
 	@JsonIgnoreProperties("myboxes")
 	private Set<BoxedBreads> boxedBreadList;
+	
+	@Column(name = "checkoutid")
+	private String checkoutid;
 
 }

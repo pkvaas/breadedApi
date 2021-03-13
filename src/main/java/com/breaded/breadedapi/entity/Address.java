@@ -39,7 +39,7 @@ public class Address {
 	private String postcode;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="user_id", insertable = false, updatable = false)
 	@JsonIgnoreProperties("addresses")
 	private User user;
 
