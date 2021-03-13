@@ -66,7 +66,7 @@ public class User {
 	private Date lastlogin;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subscription_id", nullable = true)
+    @JoinColumn(name = "subscription_id", insertable = false, updatable = false)
 	private Subscription Subscription;
 	
 	//@JsonIgnore
