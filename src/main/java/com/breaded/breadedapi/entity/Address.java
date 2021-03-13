@@ -38,8 +38,8 @@ public class Address {
 	@Column(name = "post_code")
 	private String postcode;
 	
-	@Column(name = "primary")
-	private boolean primary;
+	@Column(name = "primaryflag")
+	private boolean primaryflag;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
