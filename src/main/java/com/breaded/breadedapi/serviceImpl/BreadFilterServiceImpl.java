@@ -21,8 +21,8 @@ public class BreadFilterServiceImpl implements BreadFilterService {
 	}
 
 	@Override
-	public BreadFilter save(BreadFilter breadfilter) {
-		return breadFilterRepository.save(breadfilter);
+	public List<BreadFilter> saveAll(List<BreadFilter> breadfilterList) {
+		return (List<BreadFilter>) breadFilterRepository.saveAll(breadfilterList);
 	}
 
 }

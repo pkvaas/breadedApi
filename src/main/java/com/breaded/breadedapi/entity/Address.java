@@ -39,7 +39,7 @@ public class Address {
 	private String postcode;
 	
 	@Column(name = "primary")
-	private Boolean primary;
+	private boolean primary;
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")

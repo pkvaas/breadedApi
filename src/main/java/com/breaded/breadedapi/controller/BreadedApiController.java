@@ -163,16 +163,16 @@ public class BreadedApiController {
 	}
 	
 	@PostMapping("bread")
-	ResponseEntity<Breads> addBread(@RequestBody Breads bread){
+	ResponseEntity<List<Breads>> addBread(@RequestBody List<Breads> breadList){
 		 return new ResponseEntity<>(
-				 breadsService.save(bread), 
+				 breadsService.saveAll(breadList), 
 		      HttpStatus.OK);
 	}
 	
 	@PutMapping("bread")
-	ResponseEntity<Breads> editBread(@RequestBody Breads bread){
+	ResponseEntity<List<Breads>> editBread(@RequestBody List<Breads> breadList){
 		 return new ResponseEntity<>(
-				 breadsService.save(bread), 
+				 breadsService.saveAll(breadList), 
 		      HttpStatus.OK);
 	}
 	
@@ -185,9 +185,9 @@ public class BreadedApiController {
 	}
 	
 	@PostMapping("breadfilter")
-	ResponseEntity<BreadFilter> addBreadFilter(@RequestBody BreadFilter breadFilter){
+	ResponseEntity<List<BreadFilter>> addBreadFilter(@RequestBody List<BreadFilter> breadFilterList){
 		 return new ResponseEntity<>(
-				 breadFilterService.save(breadFilter), 
+				 breadFilterService.saveAll(breadFilterList), 
 		      HttpStatus.OK);
 	}
 	

@@ -21,8 +21,8 @@ public class BreadsServiceImpl implements BreadsService {
 	}
 
 	@Override
-	public Breads save(Breads bread) {
-		return breadsRepository.save(bread);
+	public List<Breads> saveAll(List<Breads> breadList){
+		return (List<Breads>) breadsRepository.saveAll(breadList);
 	}
 
 }

@@ -8,6 +8,6 @@ public interface BreadsService {
 	
 	List<Breads> findAll();
 	
-	Breads save(Breads bread);
+	List<Breads> saveAll(List<Breads> bread);
 	
 }

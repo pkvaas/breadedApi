@@ -8,6 +8,6 @@ public interface BreadFilterService {
 	
 	List<BreadFilter> findAll();
 	
-	BreadFilter save(BreadFilter breadfilter);	
+	List<BreadFilter> saveAll(List<BreadFilter>  breadfilterList);	
 
 }
