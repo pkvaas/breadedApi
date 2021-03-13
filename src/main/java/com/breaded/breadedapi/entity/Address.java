@@ -38,6 +38,9 @@ public class Address {
 	@Column(name = "post_code")
 	private String postcode;
 	
+	@Column(name = "primary")
+	private Boolean primary;
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	@JsonIgnoreProperties("addresses")
