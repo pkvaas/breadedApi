@@ -144,6 +144,13 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
+	@PutMapping("address")
+	ResponseEntity<Address> editAddress(@RequestBody Address address){
+		address.setUser(address.getUser());
+		 return new ResponseEntity<>(
+				 addressService.save(address), 
+		      HttpStatus.OK);
+	}
 	
 	@GetMapping("bread")
 	ResponseEntity<List<Breads>> getBreads(){
