@@ -108,10 +108,12 @@ public class BreadedApiController {
     @PostMapping("user/findbyuser")
 	ResponseEntity<User> findbyuser(@RequestBody User user){
 		
-		Optional<User> loginUser = userService.findById(user.getId());
-		if(loginUser.isPresent()) {
+    	List<User> userList = userService.findAll();
+		 
+		 Optional<User> login = userList.stream().filter(item -> item.getId() == user.getId()).findAny();
+		if(login.isPresent()) {
 			 return new ResponseEntity<>(		 
-				 userService.Save(loginUser.get()), 
+				 userService.Save(login.get()), 
 			 
 	      HttpStatus.OK);
 		 }else {
