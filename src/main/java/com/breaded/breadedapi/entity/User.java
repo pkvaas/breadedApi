@@ -66,7 +66,7 @@ public class User {
 	//@JsonIgnore
 	@OneToMany(
 	        mappedBy = "user",
-	        cascade = CascadeType.ALL,
+	        cascade = CascadeType.MERGE,
 	        fetch = FetchType.LAZY
 	    )
 	@JsonIgnoreProperties("user")
