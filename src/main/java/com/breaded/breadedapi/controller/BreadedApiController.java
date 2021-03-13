@@ -138,6 +138,7 @@ public class BreadedApiController {
 	
 	@PostMapping("address")
 	ResponseEntity<Address> addAddress(@RequestBody Address address){
+		address.setUser(address.getUser());
 		 return new ResponseEntity<>(
 				 addressService.save(address), 
 		      HttpStatus.OK);
