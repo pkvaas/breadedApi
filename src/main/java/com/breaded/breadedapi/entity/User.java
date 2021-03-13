@@ -65,8 +65,8 @@ public class User {
 	@Column(name = "last_login")
 	private Date lastlogin;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subscription_id", insertable = false, updatable = false)
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
 	private Subscription Subscription;
 	
 	//@JsonIgnore

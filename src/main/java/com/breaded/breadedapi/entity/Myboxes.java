@@ -61,4 +61,8 @@ public class Myboxes {
 
 	@Column(name ="period")
 	private String period;
+	
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinColumn(name = "address_id", referencedColumnName = "address_id")
+	private Address address;
 }
