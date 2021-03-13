@@ -9,4 +9,6 @@ public interface SubscriptionService {
 	List<Subscription> findAll();
 	
 	Subscription save(Subscription subscription);
+	
+	void delete(Subscription subscription);
 }

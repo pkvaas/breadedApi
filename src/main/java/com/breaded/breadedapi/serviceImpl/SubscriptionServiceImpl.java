@@ -25,4 +25,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		return subscriptionRepository.save(subscription);
 	}
 
+	@Override
+	public void delete(Subscription subscription) {
+		subscriptionRepository.delete(subscription);
+	}
+
 }
