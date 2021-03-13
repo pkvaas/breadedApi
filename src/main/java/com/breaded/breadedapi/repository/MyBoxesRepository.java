@@ -12,5 +12,7 @@ import com.breaded.breadedapi.entity.User;
 public interface MyBoxesRepository extends CrudRepository<Myboxes, Long> {
 	
 	List<Myboxes> findByUser(User user);
+	
+	List<Myboxes> findByUserAndPeriod(User user, String period);
 
 }

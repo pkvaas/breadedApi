@@ -1,5 +1,7 @@
 package com.breaded.breadedapi.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -217,9 +219,11 @@ public class BreadedApiController {
 	
 	@PostMapping("myboxes/findbyuser")
 	ResponseEntity<List<Myboxes>> getMyboxesByUser(@RequestBody User user){
+		Calendar cal = Calendar.getInstance();
 		
+		String period = cal.get(Calendar.MONTH)+1+"-"+cal.get(Calendar.YEAR);
 		    return new ResponseEntity<>(
-		    		myBoxesService.findByUser(user), 
+		    		myBoxesService.findByUserAndPeriod(user, period), 
 		      HttpStatus.OK);
 	}
 	

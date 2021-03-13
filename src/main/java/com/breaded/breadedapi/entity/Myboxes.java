@@ -59,4 +59,6 @@ public class Myboxes {
 	@Column(name = "checkoutid")
 	private String checkoutid;
 
+	@Column(name ="period")
+	private String period;
 }

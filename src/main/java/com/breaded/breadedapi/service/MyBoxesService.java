@@ -10,4 +10,6 @@ public interface MyBoxesService {
 	Myboxes save(Myboxes myBoxes);
 	
 	List<Myboxes> findByUser(User user);
+	
+	List<Myboxes> findByUserAndPeriod(User user, String period);
 }

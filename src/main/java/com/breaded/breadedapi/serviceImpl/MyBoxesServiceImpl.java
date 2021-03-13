@@ -26,4 +26,9 @@ public class MyBoxesServiceImpl implements MyBoxesService {
 		return myBoxesRepository.findByUser(user);
 	}
 
+	@Override
+	public List<Myboxes> findByUserAndPeriod(User user, String period) {
+		return myBoxesRepository.findByUserAndPeriod(user, period);
+	}
+
 }
