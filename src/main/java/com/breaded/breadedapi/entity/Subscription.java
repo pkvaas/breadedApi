@@ -29,6 +29,6 @@ public class Subscription {
 	private Float price;
 	
 	@Column(name = "type")
-	private int type; 
+	private Integer type; 
 
 }

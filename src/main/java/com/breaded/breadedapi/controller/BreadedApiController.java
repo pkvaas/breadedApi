@@ -206,6 +206,13 @@ public class BreadedApiController {
 		      HttpStatus.OK);
 	}
 	
+	@PutMapping("subscription")
+	ResponseEntity<Subscription> editSubscription(@RequestBody Subscription subscription){
+		 return new ResponseEntity<>(
+				 subscriptionService.save(subscription), 
+		      HttpStatus.OK);
+	}
+	
 	@DeleteMapping("subscription")
 	ResponseEntity<String> deleteSubscription(@RequestBody Subscription subscription){
 		subscriptionService.delete(subscription);
