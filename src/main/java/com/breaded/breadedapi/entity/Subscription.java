@@ -27,5 +27,8 @@ public class Subscription {
 	
 	@Column(name = "price")
 	private Float price;
+	
+	@Column(name = "type")
+	private int type; 
 
 }
