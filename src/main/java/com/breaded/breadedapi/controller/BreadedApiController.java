@@ -358,6 +358,9 @@ public class BreadedApiController {
 	@PostMapping("urbit/checkouts/delivery")
 	ResponseEntity<String> setDeliveryInfo(@RequestBody @Validated String deliveryInfo, @RequestParam("checkoutid") String checkoutid){
 		
+		System.out.println("deliveryInfo  -> "+deliveryInfo);
+		System.out.println("checkoutid  -> "+checkoutid);
+		
 		RestTemplate restTemplate = new RestTemplate();
 		
 		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts/"+ checkoutid +"/delivery", 
