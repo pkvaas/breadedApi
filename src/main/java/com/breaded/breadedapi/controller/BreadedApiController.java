@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -345,7 +344,7 @@ public class BreadedApiController {
 	}
 	
 	@PostMapping("urbit/checkouts")
-	ResponseEntity<String> checkout(@RequestBody String cartReference) throws JSONException{
+	ResponseEntity<String> checkout(@RequestBody String cartReference){
 		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts", HttpMethod.PUT, 
@@ -355,7 +354,7 @@ public class BreadedApiController {
 	}
 		
 	@PutMapping("urbit/checkouts/{checkoutid}")
-	ResponseEntity<String> setDeliveryInfo(@PathVariable("checkoutid") String checkoutid,@RequestBody String deliveryInfo) throws JSONException{
+	ResponseEntity<String> setDeliveryInfo(@PathVariable("checkoutid") String checkoutid,@RequestBody String deliveryInfo){
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -366,7 +365,7 @@ public class BreadedApiController {
 	}
 
 	@DeleteMapping("urbit/checkouts/{checkoutid}")
-	ResponseEntity<String> cancelCheckout(@PathVariable("checkoutid") String checkoutid) throws JSONException{
+	ResponseEntity<String> cancelCheckout(@PathVariable("checkoutid") String checkoutid){
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -398,15 +397,11 @@ public class BreadedApiController {
 		
 		requestHeaders.add("Authorization", URBIT_AUTH);
 		requestHeaders.add("X-API-Key", URBIT_API_KEY);
-		requestHeaders.add("Content-Type", "application/json");
 				
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(null, requestHeaders);
 		
 		return httpEntity;
 	
-	}
-	
-	
-	
+	}	
     
 }
