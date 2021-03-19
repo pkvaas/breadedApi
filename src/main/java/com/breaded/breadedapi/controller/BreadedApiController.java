@@ -347,7 +347,7 @@ public class BreadedApiController {
 	ResponseEntity<String> checkout(@RequestBody String cartReference){
 		
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts", HttpMethod.PUT, 
+		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts", HttpMethod.POST, 
 				getHttpEntity(cartReference), String.class);
 		
 		return response;
