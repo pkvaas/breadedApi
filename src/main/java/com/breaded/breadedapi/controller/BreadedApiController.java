@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -353,8 +355,8 @@ public class BreadedApiController {
 		return response;
 	}
 		
-	@PutMapping("urbit/checkouts/{checkoutid}")
-	ResponseEntity<String> setDeliveryInfo(@PathVariable("checkoutid") String checkoutid,@RequestBody String deliveryInfo){
+	@PutMapping("urbit/checkouts")
+	ResponseEntity<String> setDeliveryInfo(@RequestBody @Validated String deliveryInfo, @RequestParam("checkoutid") String checkoutid){
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
