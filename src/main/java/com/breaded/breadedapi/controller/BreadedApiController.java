@@ -1,7 +1,9 @@
 package com.breaded.breadedapi.controller;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -361,10 +363,15 @@ public class BreadedApiController {
 		System.out.println("deliveryInfo  -> "+deliveryInfo);
 		System.out.println("checkoutid  -> "+checkoutid);
 		
+		 final String url = String.format(URBIT_API_URI + "/v3/checkouts/{checkoutid}/delivery");
+		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts/"+ checkoutid +"/delivery", 
-				HttpMethod.PUT, getHttpEntity(deliveryInfo), String.class);
+		Map<String, String> param = new HashMap<String, String>();
+	    param.put("checkoutid", checkoutid);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, 
+				HttpMethod.PUT, getHttpEntity(deliveryInfo), String.class, param);
 		
 		return response;
 	}
