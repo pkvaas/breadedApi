@@ -6,15 +6,22 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.breaded.breadedapi.entity.Address;
 import com.breaded.breadedapi.entity.BoxedBreads;
@@ -66,6 +73,10 @@ public class BreadedApiController {
 	public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
     public static final String AUTH_TOKEN = System.getenv("TWILIO_AUTH_TOKEN");
     public static final String SERVICE_ID = System.getenv("TWILIO_SERVICE_ID");
+    
+    public static final String URBIT_AUTH = System.getenv("URBIT_AUTH");
+    public static final String URBIT_API_KEY = System.getenv("URBIT_API_KEY");
+    public static final String URBIT_API_URI = System.getenv("URBIT_API_URI");
 	
 //    @GetMapping("user/login/{email}/{password}")
 //	ResponseEntity<User> login(@RequestParam(value = "email") String email,
@@ -320,6 +331,81 @@ public class BreadedApiController {
 				verificationCheck.getStatus(), 
 		      HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("urbit/createcart")
+	ResponseEntity<String> createCart(@RequestBody String cart){
+		
+		RestTemplate restTemplate = new RestTemplate();
+	
+		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v2/carts", HttpMethod.POST,
+				getHttpEntity(cart), String.class);
+		
+		return response;
+	}
+	
+	@PostMapping("urbit/checkouts")
+	ResponseEntity<String> checkout(@RequestBody String cartReference) throws JSONException{
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts", HttpMethod.PUT, 
+				getHttpEntity(cartReference), String.class);
+		
+		return response;
+	}
+		
+	@PutMapping("urbit/checkouts/{checkoutid}")
+	ResponseEntity<String> setDeliveryInfo(@PathVariable("checkoutid") String checkoutid,@RequestBody String deliveryInfo) throws JSONException{
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts/"+ checkoutid +"/delivery", 
+				HttpMethod.PUT, getHttpEntity(deliveryInfo), String.class);
+		
+		return response;
+	}
+
+	@DeleteMapping("urbit/checkouts/{checkoutid}")
+	ResponseEntity<String> cancelCheckout(@PathVariable("checkoutid") String checkoutid) throws JSONException{
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts/"+ checkoutid, HttpMethod.DELETE,
+				getHttpEntity(), String.class);
+		
+		return response;
+	}
+	
+	
+	private HttpEntity<?> getHttpEntity(String body){
+		
+		MultiValueMap<String, String> requestHeaders = new LinkedMultiValueMap<String, String>(); 
+		
+		requestHeaders.add("Authorization", URBIT_AUTH);
+		requestHeaders.add("X-API-Key", URBIT_API_KEY);
+		requestHeaders.add("Content-Type", "application/json");
+				
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(body, requestHeaders);
+		
+		return httpEntity;
+	
+	}
+	
+	
+	private HttpEntity<?> getHttpEntity(){
+		
+		MultiValueMap<String, String> requestHeaders = new LinkedMultiValueMap<String, String>(); 
+		
+		requestHeaders.add("Authorization", URBIT_AUTH);
+		requestHeaders.add("X-API-Key", URBIT_API_KEY);
+		requestHeaders.add("Content-Type", "application/json");
+				
+		HttpEntity<?> httpEntity = new HttpEntity<Object>(null, requestHeaders);
+		
+		return httpEntity;
+	
+	}
+	
 	
 	
     
