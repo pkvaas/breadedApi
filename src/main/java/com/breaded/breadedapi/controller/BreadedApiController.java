@@ -363,15 +363,17 @@ public class BreadedApiController {
 		System.out.println("deliveryInfo  -> "+deliveryInfo);
 		System.out.println("checkoutid  -> "+checkoutid);
 		
-		 final String url = String.format(URBIT_API_URI + "/v3/checkouts/{checkoutid}/delivery");
+		final String url = String.format(URBIT_API_URI + "/v3/checkouts/{checkout_id}/delivery");
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
 		Map<String, String> param = new HashMap<String, String>();
-	    param.put("checkoutid", checkoutid);
+	    param.put("checkout_id", checkoutid);
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, 
 				HttpMethod.PUT, getHttpEntity(deliveryInfo), String.class, param);
+		
+		System.out.println("Res Body -> " + response.getBody() + "Headers -> " + response.getHeaders() + " status -> " + response.getStatusCode());
 		
 		return response;
 	}
