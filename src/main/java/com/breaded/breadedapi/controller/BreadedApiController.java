@@ -355,7 +355,7 @@ public class BreadedApiController {
 		return response;
 	}
 		
-	@PutMapping("urbit/checkouts")
+	@PostMapping("urbit/checkouts/delivery")
 	ResponseEntity<String> setDeliveryInfo(@RequestBody @Validated String deliveryInfo, @RequestParam("checkoutid") String checkoutid){
 		
 		RestTemplate restTemplate = new RestTemplate();
