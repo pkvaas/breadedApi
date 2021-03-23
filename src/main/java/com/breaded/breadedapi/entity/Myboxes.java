@@ -70,10 +70,10 @@ public class Myboxes {
 	private String preferences;
 	
 	@Column(name ="vegancount")
-	private boolean vegancount;
+	private int vegancount;
 	
 	@Column(name ="glutencount")
-	private boolean glutencount;
+	private int glutencount;
 	
 	
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
