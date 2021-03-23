@@ -1,5 +1,6 @@
 package com.breaded.breadedapi.entity;
 
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -61,6 +62,19 @@ public class Myboxes {
 
 	@Column(name ="period")
 	private String period;
+	
+	@Column(name ="letmepick")
+	private boolean letmepick;
+	
+	@Column(name ="preferences")
+	private String preferences;
+	
+	@Column(name ="vegancount")
+	private boolean vegancount;
+	
+	@Column(name ="glutencount")
+	private boolean glutencount;
+	
 	
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id", referencedColumnName = "address_id")

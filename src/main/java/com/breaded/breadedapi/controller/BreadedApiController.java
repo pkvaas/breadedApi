@@ -1,9 +1,7 @@
 package com.breaded.breadedapi.controller;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -357,21 +354,18 @@ public class BreadedApiController {
 		return response;
 	}
 		
-	@PostMapping("urbit/checkouts/delivery")
-	ResponseEntity<String> setDeliveryInfo(@RequestBody @Validated String deliveryInfo, @RequestParam("checkoutid") String checkoutid){
+	@PostMapping("urbit/checkouts/delivery/{checkoutid}")
+	ResponseEntity<String> setDeliveryInfo(@RequestBody @Validated String deliveryInfo, @PathVariable("checkoutid") String checkoutid){
 		
 		System.out.println("deliveryInfo  -> "+deliveryInfo);
 		System.out.println("checkoutid  -> "+checkoutid);
 		
-		final String url = String.format(URBIT_API_URI + "/v3/checkouts/{checkout_id}/delivery");
-		
 		RestTemplate restTemplate = new RestTemplate();
+	    
+	    System.out.println();
 		
-		Map<String, String> param = new HashMap<String, String>();
-	    param.put("checkout_id", checkoutid);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, 
-				HttpMethod.PUT, getHttpEntity(deliveryInfo), String.class, param);
+		ResponseEntity<String> response = restTemplate.exchange(URBIT_API_URI + "/v3/checkouts/"+checkoutid+"/delivery", 
+				HttpMethod.PUT, getHttpEntity(deliveryInfo), String.class);
 		
 		System.out.println("Res Body -> " + response.getBody() + "Headers -> " + response.getHeaders() + " status -> " + response.getStatusCode());
 		
